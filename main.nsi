@@ -54,7 +54,6 @@ Section "Install"
 	DetailPrint "Installing needed packages for Python"
 
 	# install your libraries. same as: pip install (modify this when requirements will be added for root folder)
-	# for fresenius is : http://185.46.212.88:11223
 	${If} $isProxyNeeded == 1
 		DetailPrint '"$INSTDIR\python\Scripts\pip.exe" install --proxy "$pipPackageProxy" -r "$INSTDIR\polarion_synchronizer\requirements.txt"'
 		DetailPrint ""
@@ -86,6 +85,7 @@ Var proxyTextInput
 Var proxyDesc
 Var pipProxy
 
+# Adding custom pages: https://nsis.sourceforge.io/Adding_custom_installer_pages
 Function ProxyPageCreate
 	nsDialogs::Create 1018
 	Pop $0
@@ -93,7 +93,7 @@ Function ProxyPageCreate
 	${NSD_CreateLabel} 0% 10u 100% 20u "Specify proxy for installing Python packages using pip. $\n!Note, that for FMC network proxy is required."
 	Pop $proxyDesc
 	
-	${NSD_CreateText} 0% 70u 75% 12u "Insert proxy for dowloading Python packages"
+	${NSD_CreateText} 0% 70u 75% 12u "http://185.46.212.88:11223"
 	Pop $proxyTextInput
 	EnableWindow $proxyTextInput 0
 	
@@ -109,15 +109,15 @@ ${NSD_GetText} $proxyTextInput $pipPackageProxy ; Get text from $proxyTextInput 
 ${NSD_GetState} $pipProxy $isProxyNeeded
 FunctionEnd
 
+# checkbox example is shown: https://nsis.sourceforge.io/Docs/nsDialogs/Readme.html#step-memory
 Function EnableProxy
     Pop $pipProxy	
     ${NSD_GetState} $pipProxy $0
     ${If} $0 != 1
-        ${NSD_SetText} $proxyTextInput "Insert proxy for dowloading Python packages"
+        ${NSD_SetText} $proxyTextInput ""
         EnableWindow $proxyTextInput 0
     ${Else}
         EnableWindow $proxyTextInput 1
-		${NSD_SetText} $proxyTextInput ""
     ${EndIf}
 FunctionEnd
 
@@ -183,7 +183,7 @@ Function FinishPageCreate
   nsDialogs::Show
 FunctionEnd
 
-
+# on click of link open url: https://stackoverflow.com/a/11010817
 Function rfp_link_click
     ExecShell "open" "http://www.google.com" 
 FunctionEnd
