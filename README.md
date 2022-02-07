@@ -6,10 +6,9 @@ This repo follows the following stackoverflow comment: https://stackoverflow.com
 
 # NOTE:
 Make sure you have the following files inside InstallData:
-*   Extracted [embeddable python](https://www.python.org/ftp/python/3.8.10/python-3.8.10-embed-amd64.zip)
-*   [get-pip.py](https://bootstrap.pypa.io/get-pip.py)
+* Extracted [embeddable python](https://www.python.org/ftp/python/3.8.10/python-3.8.10-embed-amd64.zip) to InstallData\python directory.
+* Store [get-pip.py](https://bootstrap.pypa.io/get-pip.py) script in InstallData\python directory.
+* Clone\download "Robot Framework Platform" repo into InstallData\robot-framework-platform directory.
 
 # TODOs:
-1   Add uninstaller (Delete all data in install dir)
-2   Get install dir from user
-3   Copy robotframework platform contents to $INSTALL\_DIR and python installation to $INSTALL\_DIR/.python
+1. Set up installer building on Azure pipelines.
